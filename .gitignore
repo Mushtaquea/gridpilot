@@ -1,0 +1,26 @@
+# Secrets — never commit these
+.env
+*.env
+
+# Runtime state (per-instance, machine-local)
+state.json
+state.json.bak
+fills.jsonl
+.fleet.pid
+.bot.pid
+
+# Logs
+logs/
+logs-watchdog.out
+*.log
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

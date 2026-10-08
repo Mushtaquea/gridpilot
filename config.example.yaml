@@ -1,0 +1,48 @@
+# =====================================================================
+# GridPilot configuration - Binance Futures TESTNET ONLY
+# NEVER put API keys in this file. Keys come from environment only:
+#   BINANCE_TESTNET_KEY / BINANCE_TESTNET_SECRET (see .env.example)
+# =====================================================================
+
+# Trading pair on the futures testnet
+symbol: BTCUSDT
+
+# Grid price range. The bot places BUY limit orders below the current price
+# at each grid line inside [lower_bound, upper_bound].
+# Tip: center the range on the current price, ±5-8% each side.
+lower_bound: 80000.0
+upper_bound: 90000.0
+
+# Number of grid intervals (creates num_grids + 1 price lines)
+num_grids: 10
+
+# USDT notional per grid BUY order. Must stay comfortably above the
+# exchange minimum notional for the symbol (testnet minimum is 20 USDT
+# for most pairs - keep this well above it).
+usdt_per_grid: 25.0
+
+# Leverage for the isolated-margin position. Hard-capped at 5x in code.
+leverage: 3
+
+# Seconds between each loop iteration
+check_interval_sec: 15
+
+# ---- Risk management (mandatory) ----
+# Pause new BUYs for the rest of the day if the open position's
+# unrealized loss exceeds this (USDT). SELLs keep working.
+max_daily_loss_usdt: 8.0
+
+# Emergency stop: if price falls below lower_bound * (1 - stop_loss_pct),
+# cancel all orders, close the position and halt the bot.
+stop_loss_pct: 0.05
+
+# Maximum total exposure in USDT (open position + open buy orders).
+# Keep this >= usdt_per_grid * num_grids or some grid levels stay empty.
+max_position_usdt: 300.0
+
+# ---- Mode ----
+# true  = paper simulation, full loop, NO api calls, no keys needed.
+# false = live against https://testnet.binancefuture.com (needs testnet keys
+#         in BINANCE_TESTNET_KEY / BINANCE_TESTNET_SECRET). Still TESTNET -
+#         there is no mainnet support in this project, by design.
+paper_mode: true
